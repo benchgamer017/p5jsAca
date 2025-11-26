@@ -1,4 +1,4 @@
-/* 기본 설정 초기화 */
+/* 초기화 */
 * {
     margin: 0;
     padding: 0;
@@ -7,104 +7,123 @@
 
 body {
     font-family: 'Noto Sans KR', sans-serif;
-    background-color: #121212; /* 아주 어두운 회색 배경 */
+    background-color: #121212; /* 다크 모드 배경 */
     color: #ffffff;
-    line-height: 1.6;
     display: flex;
     justify-content: center;
+    align-items: center; /* 화면 정중앙 배치 */
     min-height: 100vh;
 }
 
-/* 전체 컨테이너: 중앙 정렬 및 최대 너비 제한 */
 .container {
     width: 100%;
-    max-width: 1000px;
+    max-width: 900px;
     padding: 40px 20px;
 }
 
-/* 헤더 스타일 */
+/* 헤더 디자인 */
 header {
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 50px;
 }
 
 header h1 {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 10px;
-    /* 텍스트에 그라데이션 효과 주기 */
+    /* 텍스트 그라데이션 포인트 */
     background: linear-gradient(90deg, #ff8a00, #e52e71);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 header p {
-    font-size: 1.1rem;
-    color: #aaaaaa;
+    color: #888;
+    font-size: 1rem;
 }
 
-/* 그리드 레이아웃: 카드를 바둑판처럼 배치 */
+/* 그리드 레이아웃 설정 */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 반응형 그리드 */
-    gap: 30px;
-    margin-bottom: 60px;
+    grid-template-columns: 1fr 1fr; /* 정확히 반반 나누기 */
+    /* gap을 0으로 해야 선이 끊기지 않음 */
+    gap: 0; 
+    border-top: 1px solid #333;    /* (선택사항) 전체 박스 위쪽 선 */
+    border-bottom: 1px solid #333; /* (선택사항) 전체 박스 아래쪽 선 */
 }
 
-/* 프로젝트 카드 스타일 */
+/* 각 카드 스타일 */
 .project-card {
-    background-color: #1e1e1e;
-    border-radius: 15px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #333;
     position: relative;
+    transition: background-color 0.3s ease;
 }
 
-/* 카드에 마우스 올렸을 때 효과 */
+/* --- [핵심] 세로 구분선 만들기 --- */
+/* 홀수 번째(1, 3번) 카드, 즉 '왼쪽 줄' 카드들의 오른쪽에만 선을 그음 */
+.project-card:nth-child(odd) {
+    border-right: 1px solid #333;
+}
+
+/* 마우스 올렸을 때 효과 (배경색 살짝 변경) */
 .project-card:hover {
-    transform: translateY(-10px); /* 위로 살짝 떠오름 */
-    box-shadow: 0 10px 20px rgba(229, 46, 113, 0.2); /* 핑크빛 그림자 */
-    border-color: #e52e71;
+    background-color: #1a1a1a;
 }
 
-/* 링크 스타일 제거 및 카드 전체 채우기 */
+/* 링크 및 내용 스타일 */
 .project-card a {
+    display: block;
     text-decoration: none;
     color: inherit;
-    display: block;
+    padding: 40px; /* 카드 내부 여백을 넉넉하게 */
     height: 100%;
-    padding: 30px;
 }
 
-/* 카드 내부 텍스트 스타일 */
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 왼쪽 정렬 */
+}
+
 .tag {
-    display: inline-block;
-    background-color: #333;
-    color: #fff;
-    padding: 5px 12px;
-    border-radius: 20px;
     font-size: 0.8rem;
-    margin-bottom: 15px;
-    font-weight: 500;
+    color: #ff8a00;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: uppercase;
 }
 
 .project-card h2 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     margin-bottom: 10px;
     color: #fff;
 }
 
 .project-card p {
-    color: #bbb;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    color: #aaa;
+    line-height: 1.5;
 }
 
 /* 푸터 스타일 */
 footer {
     text-align: center;
+    margin-top: 50px;
     color: #555;
-    font-size: 0.8rem;
-    border-top: 1px solid #333;
-    padding-top: 20px;
+    font-size: 0.9rem;
+}
+
+/* 모바일 대응 (화면이 좁아지면 세로로 한 줄씩 나오게) */
+@media (max-width: 600px) {
+    .grid-container {
+        grid-template-columns: 1fr; /* 1열로 변경 */
+    }
+    
+    /* 모바일에서는 세로선 제거하고 가로선 추가 */
+    .project-card:nth-child(odd) {
+        border-right: none;
+        border-bottom: 1px solid #333;
+    }
+    .project-card:nth-child(2) {
+        border-bottom: 1px solid #333;
+    }
 }
